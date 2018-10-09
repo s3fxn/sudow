@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+if Process.uid == 0
+  puts 'sudow must execute as a non-privileged user to get a user PATH environment first.'
+  exit 1
+end
+
+if ARGV == []
+  puts
+  puts 'sudow - sudo wrapper to avoid secure_path.'
+  puts
+  puts 'Usage: sudow command args...'
+  puts
+  puts '$ which gem'
+  puts '/usr/local/ruby2.5.1/bin/gem'
+  puts
+  puts '$ sudo gem install ...'
+  puts 'sudo: gem: command not found'
+  puts
+  puts '$ sudow gem install ...'
+  puts 'sudo /usr/local/ruby2.5.1/bin/gem install ...'
+  puts 'Fetching: ...'
+  puts
+  puts '*This command bypass the security mechanism called secure_path.*'
+  puts '*You need to know the risk before use.*'
+  puts
+  exit 1
+end
+
+cmd = ARGV.shift
+fullpath = `which #{cmd}`.strip
+if fullpath == ''
+  puts "#{cmd} not found."
+  exit 1
+end
+sudo_cmd = "sudo #{fullpath} #{ARGV.join(' ')}"
+
+puts sudo_cmd
+exec sudo_cmd
+
