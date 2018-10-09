@@ -2,6 +2,9 @@
 
 sudow - sudo wrapper to avoid secure_path.
 
+**This command bypass the security mechanism called secure_path.**
+**You need to know the risk before use.**
+
 ## Installation
 
     $ gem install sudow
@@ -21,9 +24,10 @@ sudo: gem: command not found
 $ sudow gem install ...
 sudo /usr/local/ruby2.5.1/bin/gem install ...
 Fetching: ...
-```
+
 *This command bypass the security mechanism called secure_path.*
 *You need to know the risk before use.*
+```
 
 ## Contributing
 
