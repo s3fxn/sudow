@@ -2,8 +2,7 @@
 
 sudow - sudo wrapper to avoid secure_path.
 
-**This command bypass the security mechanism called secure_path.**
-
+**This command bypass the security mechanism called secure_path.**  
 **You need to know the risk before use.**
 
 ## Installation
