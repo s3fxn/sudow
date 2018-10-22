@@ -9,7 +9,9 @@ if ARGV == []
   puts
   puts 'sudow - sudo wrapper to avoid secure_path.'
   puts
-  puts 'Usage: sudow command args...'
+  puts 'Usage: sudow [-E] command args...'
+  puts 
+  puts '-E  preserve existing environment variables'
   puts
   puts '$ which gem'
   puts '/usr/local/ruby2.5.1/bin/gem'
@@ -18,7 +20,12 @@ if ARGV == []
   puts 'sudo: gem: command not found'
   puts
   puts '$ sudow gem install ...'
-  puts 'sudo /usr/local/ruby2.5.1/bin/gem install ...'
+  puts 'sudo  /usr/local/ruby2.5.1/bin/gem install ...'
+  puts 'Fetching: ...'
+  puts
+  puts '$ export http_proxy=http://proxy.example.com:8080/'
+  puts '$ sudow -E gem install ...'
+  puts 'sudo -E /usr/local/ruby2.5.1/bin/gem install ...'
   puts 'Fetching: ...'
   puts
   puts '*This command bypass the security mechanism called secure_path.*'
@@ -27,13 +34,20 @@ if ARGV == []
   exit 1
 end
 
+if ARGV[0] == '-E'
+  flag = '-E'
+  ARGV.shift
+else
+  flag = ''
+end
+
 cmd = ARGV.shift
 fullpath = `which #{cmd}`.strip
 if fullpath == ''
   puts "#{cmd} not found."
   exit 1
 end
-sudo_cmd = "sudo #{fullpath} #{ARGV.join(' ')}"
+sudo_cmd = "sudo #{flag} #{fullpath} #{ARGV.join(' ')}"
 
 puts sudo_cmd
 exec sudo_cmd
