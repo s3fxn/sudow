@@ -8,6 +8,7 @@ sudow - sudo wrapper to avoid secure_path.
 ## Installation
 
     $ gem install sudow
+    (you may need to run as root or through sudo.)
 
 ## Usage
 
